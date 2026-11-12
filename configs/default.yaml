@@ -1,0 +1,47 @@
+# Street furniture inventory from mobile laser scanning (Toronto-3D)
+
+data:
+  name: Toronto-3D                       # shown in the app
+  synthetic: false
+  raw_dir: data/raw/Toronto_3D          # where the L00x.ply files live
+  processed_dir: data/processed
+  grid_size: 0.10                        # voxel size (m) for sub-sampling; RandLA-Net paper uses 0.06
+  train_tiles: [L001, L003, L004]        # official split
+  test_tiles: [L002]
+  utm_offset: [627285.0, 4841948.0, 0.0] # recommended by the dataset authors (float precision)
+  crs: "EPSG:26917"                      # NAD83 / UTM zone 17N
+
+baseline:                                # "conventional" ML: handcrafted geometry + Random Forest
+  k_neighbours: [10, 30]
+  samples_per_class: 20000
+  n_estimators: 150
+  max_depth: 22
+
+randla:                                  # deep learning: RandLA-Net (pure PyTorch)
+  num_points: 32768                      # points per crop (must be divisible by 4^4)
+  k: 16
+  batch_size: 4
+  epochs: 40
+  steps_per_epoch: 250
+  lr: 0.01
+  lr_decay: 0.95                         # per epoch
+  num_workers: 2                         # each worker is a process; keep low on 8 GB RAM
+  amp: true
+  val_crops: 24
+  infer_threshold: 0.5                   # stop inference when every point has this "coverage"
+
+inventory:
+  pole:
+    cell: 0.25          # raster cell (m) for 2-D connected components
+    min_points: 15
+    min_height: 1.5     # m above local ground
+    match_dist: 1.0     # m, prediction <-> reference
+  car:
+    cell: 0.30
+    min_points: 80
+    min_height: 0.8
+    match_dist: 2.0
+
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  experiment: toronto3d-street-inventory

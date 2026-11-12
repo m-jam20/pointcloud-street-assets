@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "streetinv"
+version = "0.1.0"
+description = "Street furniture inventory from mobile laser scanning point clouds (Toronto-3D)"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy", "scipy", "plyfile", "scikit-learn", "pandas", "pyproj", "matplotlib",
+  "tqdm", "pyyaml", "torch", "mlflow", "streamlit", "plotly",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

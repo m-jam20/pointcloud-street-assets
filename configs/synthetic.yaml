@@ -1,0 +1,17 @@
+# Smoke-test config: synthetic streets (scripts/make_synthetic.py), short training.
+data:
+  name: Synthetic street
+  synthetic: true
+  raw_dir: data/raw/synthetic
+  processed_dir: data/processed/synthetic
+randla:
+  epochs: 2
+  steps_per_epoch: 20
+  num_points: 16384
+  val_crops: 8
+  num_workers: 2
+baseline:
+  samples_per_class: 3000
+  n_estimators: 50
+mlflow:
+  experiment: synthetic-smoke-test
