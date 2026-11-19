@@ -3,9 +3,11 @@
 Automatic inventory of street poles and cars from mobile LiDAR, comparing a conventional
 Random Forest with the deep-learning model **RandLA-Net** on the [Toronto-3D](https://github.com/WeikaiTan/Toronto-3D) dataset.
 
-**RandLA-Net reaches 78.1 % mIoU (vs 54.0 %) and finds poles with F1 0.66 (vs 0.26), with 83 % fewer false alarms.**
+**Compared with the Random Forest, RandLA-Net raises mIoU from 54.0 % to 78.1 % and pole F1 from 0.26 to 0.66, with 83 % fewer false alarms.**
 
-![Reference vs Random Forest vs RandLA-Net](reports/figures/scene_comparison.png)
+![Reference labels vs RandLA-Net prediction in the Streamlit app](reports/figures/scene_comparison.png)
+
+*Streamlit app, test tile L002: reference labels (left) next to the RandLA-Net prediction (right).*
 
 ## Results (test tile L002)
 

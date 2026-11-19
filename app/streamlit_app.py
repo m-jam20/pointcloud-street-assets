@@ -28,7 +28,7 @@ st.set_page_config(page_title="Street inventory · Toronto-3D", page_icon="🏙�
 
 # Fixed categorical order for runs (colour follows the run, never its rank)
 RUN_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#6250d6", "#008300"]
-REF_GREY = "#a3a29c"
+REF_GREYS = ["#c9c8c2", "#6f6e69", "#a3a29c"]  # light / dark / mid: published results stay neutral but distinguishable
 STATUS = {"TP": "#1f9d55", "FP": "#d03b3b", "FN": "#eda100"}
 OK_GREY, ERR_RED = "#c9c8c2", "#d03b3b"
 SEQ = [[0, "#cfe0f5"], [1, "#0b3d91"]]  # one-hue sequential ramp
@@ -327,7 +327,7 @@ if page == "📊 Metrics":
 
         cls = [CLASS_NAMES[c] for c in EVAL_CLASSES]
         long = show.melt(id_vars=["model"], value_vars=["mIoU"] + cls, var_name="class", value_name="IoU")
-        cmap = {**run_color, **{k: REF_GREY for k in REFERENCE_RESULTS}}
+        cmap = {**run_color, **{k: REF_GREYS[i % len(REF_GREYS)] for i, k in enumerate(REFERENCE_RESULTS)}}
         fig = px.bar(long, x="class", y="IoU", color="model", barmode="group", color_discrete_map=cmap,
                      height=380)
         fig.update_traces(marker_line_width=0, hovertemplate="%{x}<br>IoU %{y:.1f}%<extra>%{fullData.name}</extra>")
